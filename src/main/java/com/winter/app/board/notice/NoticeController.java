@@ -23,8 +23,8 @@ public class NoticeController {
 	
 	@GetMapping("list")
 	public String gerList(Pager pager, Model model)throws Exception{
-//		List<BoardVO> ar = noticeService.getList(pager);
-//		model.addAttribute("list", ar);
+		List<BoardVO> ar = noticeService.getList(pager);
+		model.addAttribute("list", ar);
 		
 		// ERROR, WARN, INFO, DEBUG, TRACE
 		log.warn("getList 실행");

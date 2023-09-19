@@ -6,25 +6,27 @@
 <head>
 <meta charset="UTF-8">
 <title>Insert title here</title>
-<c:import url="./layout/header.jsp"></c:import>
+<c:import url="/WEB-INF/views/layout/header.jsp"></c:import>
 
 </head>
 <body id="page-top">
-	<!-- Page Wrapper -->
-	<div id="wrapper">
-		<!-- sidebar -->
-		<c:import url="./layout/sidebar.jsp"></c:import>
-		
-		<div id="content-wrapper" class="d-flex flex-column">
-			<div id="content">
-			<c:import url="./layout/topbar.jsp"></c:import>
-			
-			
-			<c:import url="./layout/btnbar.jsp"></c:import>
-			</div>
-		</div>
-	</div>
-
-<c:import url="./layout/footer.jsp"></c:import>
+<div id="wrapper">
+      <!-- sidebar -->
+      <c:import url="/WEB-INF/views/layout/sidebar.jsp"></c:import>
+      
+      <div id="content-wrapper" class="d-flex flex-column">
+         <div id="content">
+	         <c:import url="/WEB-INF/views/layout/topbar.jsp"></c:import>
+	         
+	         <div class="container-fluid">
+	         	<!-- page 상세내용 -->
+	         </div>
+         
+         </div>
+         <c:import url="/WEB-INF/views/layout/btnbar.jsp"></c:import>
+      </div>
+   </div>
+   
+<c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
 </body>
 </html>

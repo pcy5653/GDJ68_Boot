@@ -20,7 +20,6 @@
 	         
 	         <div class="container-fluid">
 	         	<!-- page 상세내용 -->
-	         	<h1>list page</h1>
 	         </div>
          
          </div>

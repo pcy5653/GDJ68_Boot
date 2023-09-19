@@ -4,12 +4,76 @@
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
   
 <mapper namespace="com.winter.app.board.notice.NoticeDAO">
-	<select id="getList" resultType="NoticeVO">
-		SELECT * FROM NOTICE ORDER BY BOARDNO DESC
+	<sql id="forPager">
+		<!-- 
+		if문 사용
+		<if test="kind=='1'">
+			BOARDTITLE LIKE '%%'
+		</if>
+		<if test="kind=='2'">
+			BOARDWRITER LIKE '%%'
+		</if>
+		<if test="kind=='3'">
+			BOARDCONTENTS LIKE '%%'
+		</if> -->
+		
+		<choose>
+			<when test="kind=='1'">
+				BOARDTITLE 
+			</when>
+			<when test="kind=='2'">
+				BOARDCONTENTS
+			</when>
+			<otherwise>
+				BOARDWRITER
+			</otherwise>
+		</choose>
+	</sql>
+	
+	<!-- 1. count -->
+	<select id="getCount" parameterType="Pager" resultType="Long">
+		<!-- <bind> : mybatis에서 제공하는 동적쿼리문 / value => parameter값을 가져올때는 _(언더바)를 쓰고 파라미터.getter의 이름 -->
+		<bind name="pattern" value="'%'+_parameter.getSearch()+'%'"/>
+		SELECT COUNT(BOARDNO) FROM NOTICE
+		WHERE <include refid="forPager"></include>
+		LIKE #{pattern}
+	</select>
+
+	<!-- 2. List -->
+	<select id="getList" resultType="NoticeVO" parameterType="Pager">
+		SELECT * FROM NOTICE
+		WHERE
+				<include refid="forPager"></include>
+				LIKE CONCAT('%',#{search},'%')
+		ORDER BY BOARDNO DESC
+		LIMIT #{startRow}, #{lastRow}
 	</select>
 	
+	<!-- 3. Add -->
 	<insert id="add" parameterType="BoardVO">
 		INSERT INTO NOTICE 
 		VALUES (NULL, #{boardTitle}, #{boardWriter}, #{boardContents}, NOW(), 0)
 	</insert>
+
+	<!-- 4. Detail -->
+	<select id="getDetail" parameterType="BoardVO" resultType="NoticeVO">
+		SELECT * FROM NOTICE WHERE BOARDNO=#{boardNo}
+	</select>
+		
+	<!-- 5. Update : 조회수 update-->
+	<update id="setUpdate" parameterType="BoardVO">
+		UPDATE NOTICE SET
+			BOARDTITLE=#{boardTitle},
+			BOARDCONTENTS=#{boardContents}
+		WHERE BOARDNO=#{boardNo}
+	</update>
+	
+	<update id="setHitUpdate" parameterType="BoardVO">
+		UPDATE NOTICE SET BOARDHIT=BOARDHIT+1 WHERE BOARDNO=#{boardNo}
+	</update>
+
+	<!-- 6. Delete -->
+	<delete id="setDelete" parameterType="BoardVO">
+		DELETE FROM NOTICE WHERE BOARDNO=#{boardNo}
+	</delete>
 </mapper>

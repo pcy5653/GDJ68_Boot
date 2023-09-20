@@ -20,23 +20,32 @@
 	         
 	         <div class="container-fluid">
 	         	<!-- page 상세내용 -->
-	         	<table>
-                  <thead>
-                     <tr>
-                        <th>Title</th>
-                        <th>Writer</th>
-                        <th>Contents</th>
-                     </tr>
-                  </thead>
-                  <tbody>
-                     <tr>
-                        <td>${detail.boardTitle}</td>
-                        <td>${detail.boardWriter}</td>
-                        <td>${detail.boardContents}</td>
-                     </tr>
-                  </tbody>
-               </table>
+               <div class="row">
+                  <table>
+                     <thead>
+                        <tr>
+                           <th>Title</th>
+                           <th>Writer</th>
+                           <th>Contents</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>${detail.boardTitle}</td>
+                           <td>${detail.boardWriter}</td>
+                           <td>${detail.boardContents}</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
 
+               <!-- file -->
+               <div class="row">
+                  <c:forEach items="${detail.list}" var="f">
+                     <img src="../files/${board}/${f.fileName}" alt="">
+                     <a href="./fileDown?fileNo=${f.fileNo}">${f.originalName}</a>
+                  </c:forEach>
+               </div>
 
                <div class="col-sm-12 col-md-5">
                   <div class="dataTables_info"id="dataTable_info"role="status"aria-live="polite">

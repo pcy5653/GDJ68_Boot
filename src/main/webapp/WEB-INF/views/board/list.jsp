@@ -38,8 +38,8 @@
                            <tbody>
                               <c:forEach items="${list}" var="vo">
                                  <tr>
-                                    <td><a href="./detail?boardNo=${vo.boardNo}">${vo.boardNo}</a></td>
-                                    <td>${vo.boardTitle}</td>
+                                    <td>${vo.boardNo}</td>
+                                    <td><a href="./detail?boardNo=${vo.boardNo}">${vo.boardTitle}</a></td>
                                     <td>${vo.boardWriter}</td>
                                     <td>${vo.boardDate}</td>
                                     <td>${vo.boardHit}</td>

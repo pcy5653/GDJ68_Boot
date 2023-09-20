@@ -17,4 +17,7 @@ public interface BoardService {
 	public int setUpdate(BoardVO boardVO)throws Exception;
 	
 	public int setDelete(BoardVO boardVO)throws Exception;
+	
+	// file
+	public FileVO getFileDetail(FileVO fileVO)throws Exception;
 }

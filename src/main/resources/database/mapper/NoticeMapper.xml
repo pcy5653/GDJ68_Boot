@@ -49,8 +49,8 @@
 		LIMIT #{startRow}, #{lastRow}
 	</select>
 	
-	<!-- 3. Add -->
-	<insert id="add" parameterType="BoardVO">
+	<!-- 3. Add useGeneratedKeys="true" : 자동생성된 키를 반환함 -->
+	<insert id="add" parameterType="BoardVO" useGeneratedKeys="true" keyProperty="boardNo">
 		INSERT INTO NOTICE 
 		VALUES (NULL, #{boardTitle}, #{boardWriter}, #{boardContents}, NOW(), 0)
 	</insert>
@@ -76,4 +76,14 @@
 	<delete id="setDelete" parameterType="BoardVO">
 		DELETE FROM NOTICE WHERE BOARDNO=#{boardNo}
 	</delete>
+	
+	
+	
+	<!-- File 부분 -->
+	
+	<!-- 1. file add -->
+	<insert id="fileAdd" parameterType="NoticeFileVO">
+		INSERT INTO NOTICEFILE
+		VALUES (#{fileNo}, #{boardNo}, #{fileName}, #{originalName})
+	</insert>
 </mapper>

@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardVO;
 import com.winter.app.commons.Pager;
@@ -45,9 +46,11 @@ public class NoticeController {
 		return "board/add";
 	}
 	@PostMapping("add")
-	public String add(NoticeVO noticeVO)throws Exception{
+	public String add(NoticeVO noticeVO, MultipartFile[] files)throws Exception{
 		// log.info("NoticeVO : {}", noticeVO); // lombok @ToString으로 console에 입력내용 출력
-		int result = noticeService.add(noticeVO);
+		
+		//log.info("files : {} ", files);
+		int result = noticeService.add(noticeVO, files);
 		
 		return "redirect:./list";
 	}

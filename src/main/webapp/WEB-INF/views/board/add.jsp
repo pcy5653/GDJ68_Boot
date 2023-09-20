@@ -21,7 +21,7 @@
 	         <div class="container-fluid">
 	         	<!-- page 상세내용 -->
                <div class="row">
-                  <form action="add" method="post">
+                  <form action="add" method="post" enctype="multipart/form-data">
                      <div class="mb-3">
                         <label for="boardTitle" class="form-label">Title</label>
                         <input type="text" class="form-control" name="boardTitle" id="boardTitle" placeholder="제목을 입력하세요.">
@@ -34,6 +34,14 @@
                         <label for="boardContents" class="form-label">Contents</label>
                         <textarea class="form-control" name="boardContents" id="boardContents" rows="3"></textarea>
                      </div>
+
+                     <div class="mb-3">
+                        <input type="file" name="files" class="form-control">
+                     </div>
+                     <div class="mb-3">
+                        <input type="file" name="files" class="form-control">
+                     </div>
+
                      <button class="btn btn-danger">ADD</button>
                   </form>
                </div>

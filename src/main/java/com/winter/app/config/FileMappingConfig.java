@@ -24,10 +24,10 @@ public class FileMappingConfig implements WebMvcConfigurer {
 	public void addResourceHandlers(ResourceHandlerRegistry registry) {
 		
 		
-		// 요청 URL
+		// 요청 URL : /files/** 경로로 들어온 요청은
 		registry.addResourceHandler(urlPath)
 		
-		// local file 위치
+		// local file 위치 : file:///D:///pcy/upload/ 이 경로로 생각하여 뒤에 더 붙여서 파일 요청 진행.
 				.addResourceLocations(filePath);
 	}
 }

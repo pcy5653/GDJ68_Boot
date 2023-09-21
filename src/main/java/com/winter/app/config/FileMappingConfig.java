@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 // **-context.xml 파일과 같은 역할
 
-@Configuration
+@Configuration  // springBoot가 실행될 때 가장 먼저 읽기
 public class FileMappingConfig implements WebMvcConfigurer {
 
 	// local file 위치

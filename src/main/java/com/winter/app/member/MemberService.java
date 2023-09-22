@@ -11,6 +11,24 @@ public class MemberService {
 	private MemberDAO memberDAO;
 	
 	
+	
+	// login
+	public MemberVO getLogin(MemberVO memberVO)throws Exception{  // 매개변수 : 입력한 id, pw
+		MemberVO loginVO = memberDAO.getMember(memberVO);  // DB의 user의 정보와 일치한지 검증
+		
+		if(loginVO == null) {
+			return loginVO;   // login 실패
+		}
+		
+		if(loginVO.getPassword().equals(memberVO.getPassword())) {
+			return loginVO;	// login 성공
+		}	
+		return null;   
+	}
+	
+	
+	
+	
 	// Member 검증 메서드
 	public boolean getMemberError(MemberVO memberVO, BindingResult bindingResult)throws Exception {
 		// false : error X (검증통과) | true : error O (검증실패)

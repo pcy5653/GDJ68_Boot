@@ -28,12 +28,12 @@
                         <ul class="navbar-nav ml-auto">
                             <li class="nav-item">
                                 <a class="nav-link" href="/member/join" id="join" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
+                                    <i class='far fa-address-book' style='font-size:36px'></i>
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="/member/login" id="login" role="button" aria-haspopup="true" aria-expanded="false">
-                                    <i class="fas fa-search fa-fw"></i>
+                                    <i class='far fa-user-circle' style='font-size:36px'></i>
                                 </a>
                             </li>
                         </ul>

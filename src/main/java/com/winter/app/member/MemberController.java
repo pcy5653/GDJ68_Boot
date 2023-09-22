@@ -2,6 +2,7 @@ package com.winter.app.member;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -18,6 +19,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class MemberController {
 
+	@Autowired
+	private MemberService memberService;
 	
 	
 	
@@ -36,10 +39,20 @@ public class MemberController {
 	@PostMapping("join")
 	// parameter 사진이름 : photo
 	public String setJoin(@Valid MemberVO memberVO,BindingResult bindingResult, MultipartFile photo)throws Exception{
-		if(bindingResult.hasErrors()) {
+		
+		// password 검증 => false : error X | true : error O
+		boolean check = memberService.getMemberError(memberVO, bindingResult);
+		
+		
+		// hasErrors가 발생하거나 check가 true면 (오류발생) return 값 실행.
+		if(bindingResult.hasErrors() || check) {
 			// 빈칸이면 join에 에러 출력 <form:errors>
 			return "member/join";
 		}
+		
+		
+		// 회원가입 진행(if문 해당 X)
+		
 		
 		log.info("photo : {} ---- size : {} ", photo.getOriginalFilename(), photo.getSize());
 		return "redirect:../";

@@ -47,6 +47,7 @@
                   <div class="form-group">
                   	<form:label path="passwordCheck">PasswordCheck</form:label>
                   	<form:password id="passwordCheck" path="passwordCheck" cssClass="form-control"/>
+                     <form:errors path="passwordCheck"></form:errors>
                   </div>
                   
                   <div class="form-group">

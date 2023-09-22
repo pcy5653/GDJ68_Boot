@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.winter.app.board.BoardService;
@@ -39,13 +40,15 @@ public class NoticeService implements BoardService {
 	}
 
 	@Override
+	@Transactional(rollbackFor=Exception.class)  // 1개의 메소드에 2개 이상의 insert,update,delete등이 이뤄질때 transaction 처리 -> Service class위에 쓰면 모두 transaction처리
 	public int add(BoardVO boardVO, MultipartFile[] files) throws Exception {
 		log.info("BoardNo : {} ", boardVO.getBoardNo());
 		int result = noticeDAO.add(boardVO);
 		log.info("======================");
 		log.info("BoardNo : {} ", boardVO.getBoardNo());
+		
+		
 		for(MultipartFile multipartFile : files) {
-			
 			if(multipartFile.isEmpty()) {
 				continue;
 			}

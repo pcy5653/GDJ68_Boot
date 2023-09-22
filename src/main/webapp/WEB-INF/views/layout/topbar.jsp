@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!-- Topbar -->
                 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
 
@@ -23,7 +24,24 @@
                     </form>
 
                     <!-- Topbar Navbar -->
-                    <ul class="navbar-nav ml-auto">
+                    <c:if test="${empty member}">
+                        <ul class="navbar-nav ml-auto">
+                            <li class="nav-item">
+                                <a class="nav-link" href="/member/join" id="join" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class='far fa-address-book' style='font-size:36px'></i>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="/member/login" id="login" role="button" aria-haspopup="true" aria-expanded="false">
+                                    <i class='far fa-user-circle' style='font-size:36px'></i>
+                                </a>
+                            </li>
+                        </ul>
+                    </c:if>
+
+
+                    <c:if test="${not empty member}">
+                        <ul class="navbar-nav ml-auto">
 
                         <!-- Nav Item - Search Dropdown (Visible Only XS) -->
                         <li class="nav-item dropdown no-arrow d-sm-none">
@@ -183,9 +201,9 @@
                                     <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Profile
                                 </a>
-                                <a class="dropdown-item" href="#">
+                                <a class="dropdown-item" href="/member/update">
                                     <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
-                                    Settings
+                                    정보수정
                                 </a>
                                 <a class="dropdown-item" href="#">
                                     <i class="fas fa-list fa-sm fa-fw mr-2 text-gray-400"></i>
@@ -199,7 +217,7 @@
                             </div>
                         </li>
 
-                    </ul>
-
+                        </ul>
+                    </c:if>
                 </nav>
                 <!-- End of Topbar -->

@@ -8,7 +8,8 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 
 import com.winter.app.interceptors.TestInterceptor;
 
-@Configuration  // springBoot가 실행될 때 가장 먼저 읽기
+//**-context.xml 파일과 같은 역할
+@Configuration  // springBoot가 실행될 때 가장 먼저 읽기 (설정파일)
 public class InterceptorConfig implements WebMvcConfigurer  {
 
 	@Autowired

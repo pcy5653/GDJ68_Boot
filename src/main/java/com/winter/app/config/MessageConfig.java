@@ -11,7 +11,8 @@ import org.springframework.web.servlet.i18n.CookieLocaleResolver;
 import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
-@Configuration  // springBoot 실행 시, 가장 먼저 읽히는 파일
+//**-context.xml 파일과 같은 역할
+@Configuration  // springBoot 실행 시, 가장 먼저 읽히는 파일 (설정파일)
 public class MessageConfig implements WebMvcConfigurer {
 
 	

@@ -55,10 +55,18 @@
 		     <!-- 버전 삭제, 에러 발생시 버전 적용 -->
 		</dependency>
 		
+		<!-- Spring Security API 추가 -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-security</artifactId>
 		</dependency>
+		
+		<!-- JSP Spring Security Tag : JSP에서 logout 시 변경화면-->
+		<dependency>
+		    <groupId>org.springframework.security</groupId>
+		    <artifactId>spring-security-taglibs</artifactId>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-web</artifactId>

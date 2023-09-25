@@ -34,7 +34,7 @@ public class MemberController {
 	@GetMapping("update") // 정보수정 전
 	public void setUpdate(HttpSession session, Model model)throws Exception{
 		MemberVO memberVO = (MemberVO)session.getAttribute("member");
-		memberVO = memberService.getLogin(memberVO); // 가져온 정보가 일치 확인 후에 update 부분에 뿌리기
+		//memberVO = memberService.getLogin(memberVO); // 가져온 정보가 일치 확인 후에 update 부분에 뿌리기
 		
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
 		memberInfoVO.setName(memberVO.getName());
@@ -61,21 +61,27 @@ public class MemberController {
 	}
 	
 
-	// login
+	
+ 
+//	// login
 	@GetMapping("login")
 	public void getLogin(@ModelAttribute MemberVO memberVO)throws Exception{
 		
 	}
-	@PostMapping("login")
-	public String getLogin2(MemberVO memberVO, HttpSession session)throws Exception{
-		memberService.getLogin(memberVO);
-		
-		if(memberVO != null) {
-			session.setAttribute("member", memberVO);
-			return "redirect:../";  // 성공
-		}
-		return "redirect:./";       // 실패 => 현재위치
-	}
+	
+/**
+  * <<Spring Security 할일 => login.post 부분 (SecurityConfig)>>
+  * */ 
+//	@PostMapping("login")
+//	public String getLogin2(MemberVO memberVO, HttpSession session)throws Exception{
+//		memberService.getLogin(memberVO);
+//		
+//		if(memberVO != null) {
+//			session.setAttribute("member", memberVO);
+//			return "redirect:../";  // 성공
+//		}
+//		return "redirect:./";       // 실패 => 현재위치
+//	}
 	
 	
 	
@@ -107,9 +113,8 @@ public class MemberController {
 			return "member/join";
 		}
 		
-		
-		// 회원가입 진행(if문 해당 X)
-		
+		// 회원가입 진행 (pw암호화, service에서 int 2번으로 transaction 실행.)
+		int result = memberService.setJoin(memberVO); 
 		
 		log.info("photo : {} ---- size : {} ", photo.getOriginalFilename(), photo.getSize());
 		return "redirect:../";

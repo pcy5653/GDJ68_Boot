@@ -1,15 +1,25 @@
 package com.winter.app.member;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.validation.BindingResult;
 
+import lombok.extern.slf4j.Slf4j;
+
 @Service
+@Slf4j
 public class MemberService {
 	
 	@Autowired
 	private MemberDAO memberDAO;
 	
+	
+	
+	public void testValid (@Valid MemberVO memberVO, BindingResult bindingResult)throws Exception{
+		log.info("Test Valid");
+	}
 	
 	
 	// login

@@ -94,15 +94,24 @@ public class MemberController {
 	}
 	@PostMapping("join")
 	// parameter 사진이름 : photo
-	// @Valid : 검증
-	public String setJoin(@Valid MemberVO memberVO,BindingResult bindingResult, MultipartFile photo)throws Exception{
+	// @Valid : 검증 -> BindigResult : 검증결과물 
+	public String setJoin(MemberVO memberVO,BindingResult bindingResult, MultipartFile photo)throws Exception{
+		
+		/**
+		 * @Valid는 Controller에서만 가능.
+		 * */
+		
+		// 검증 Service로 보냄.
+		memberService.testValid(memberVO, bindingResult);
+		
+		
 		
 		// password 검증 => false : error X | true : error O
-		boolean check = memberService.getMemberError(memberVO, bindingResult);
+		//boolean check = memberService.getMemberError(memberVO, bindingResult);
 		
 		
-		// hasErrors가 발생하거나 check가 true면 (오류발생) return 값 실행.
-		if(bindingResult.hasErrors() || check) {
+		// hasErrors가 발생하거나 check가 true면 (오류발생) return 값 실행.  || check
+		if(bindingResult.hasErrors()) {
 			// 빈칸이면 join에 에러 출력 <form:errors>
 			return "member/join";
 		}

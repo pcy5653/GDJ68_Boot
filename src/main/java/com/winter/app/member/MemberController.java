@@ -94,6 +94,7 @@ public class MemberController {
 	}
 	@PostMapping("join")
 	// parameter 사진이름 : photo
+	// @Valid : 검증
 	public String setJoin(@Valid MemberVO memberVO,BindingResult bindingResult, MultipartFile photo)throws Exception{
 		
 		// password 검증 => false : error X | true : error O

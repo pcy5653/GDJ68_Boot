@@ -27,7 +27,7 @@
 	         	
                <!-- action 안쓰면 url 그대로 주소 사용 /member/join -->
                <!-- prefix="form" 사용 -->
-               <!-- ^^modelAttribute^^ : Controller에서 보내는 키이름 -->
+               <!-- ^^modelAttribute^^ : Controller에서 보내는 키이름 | path = name(파라미터)-->
                <form:form modelAttribute="memberInfoVO" method="post" enctype="multipart/form-data">
                   <div class="form-group">
                   	 <form:label path="name">Name</form:label>

@@ -29,9 +29,10 @@ public class IndexController {
 //			log.info("================= Attribute : {} ", name);
 //		}
 		
+		// 1. session에서 user 정보 추출 | 2. SecurityContext 타입으로 꺼내기
 		//Object obj = session.getAttribute("SPRING_SECURITY_CONTEXT");
-		
 		SecurityContext con = SecurityContextHolder.getContext();
+		
 		Authentication b = con.getAuthentication();
 		
 		// 접근주체의 모든 정보에서 원하는 정보를 선택하기 위해서는 MemberVO로 형변환을 해본다. (bootstrap 문제인가 되지 않음.)

@@ -6,6 +6,8 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -28,6 +30,10 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	@GetMapping("info")
+	public void getInfo()throws Exception{
+		
+	}
 
 	
 	// 정보수정 update : DB or session에서 사용자 정보꺼내기 (password는 따로 수정)
@@ -65,8 +71,23 @@ public class MemberController {
  
 //	// login
 	@GetMapping("login")
-	public void getLogin(@ModelAttribute MemberVO memberVO)throws Exception{
+	public String getLogin(@ModelAttribute MemberVO memberVO)throws Exception{
+		// << 로그인 성공 시, 뒤로가기 처리>>
+		SecurityContext context = SecurityContextHolder.getContext();
 		
+		context.getAuthentication().getName();
+
+		log.info("======= CONTEXT : {} ===========", context);  // 사용자의 정보
+		log.info("====== CONTEXT_NAME : {} ========", context.getAuthentication().getName());
+		
+		String check = context.getAuthentication().getPrincipal().toString();
+		
+		// anonymousUser : 비로그인
+		if(!check.equals("anonymousUser")) {
+			// 로그인을 성공했다는 전재 => 뒤로가기 했을 때 "redirect:/" 보냄. 
+			return "redirect:/";
+		}
+		return "member/login";
 	}
 	
 /**

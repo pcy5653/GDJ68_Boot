@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %> 
+<%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
 
 <!DOCTYPE html>
 
@@ -25,8 +26,10 @@
 	         <div class="container-fluid">
 	         	<!-- page 상세내용 -->
 	         	<div>
-	         		<!-- login 실패시 message가 뜸 -->
+	         		<!-- login 실패시 message가 뜸. code=키이름 var=키값을 담는 곳 -->
 	         		<h3>${param.message}</h3>
+	         		<spring:message code="${param.message}" var="msg"></spring:message>
+	         		<h3>${msg}</h3>
 	         	</div>
 	         	
 	         	
@@ -62,11 +65,13 @@
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
 
 <script type="text/javascript">
-	/* 로그인 실패 시, 파라미터로 받아온 message를 띄움. */
-	let message = '${param.message}';
+	/* 로그인 실패 시, 파라미터로 받아온 message를 띄움. 
+	   let message = '${param.message}'; => 키값을 ${msg}에 담았기 때문에 값을 ${msg}라고 생각.
+	*/
+	let message = '${msg}';
 	
 	if(message != ""){
-		alert('${param.message}');
+		alert(message);
 	}
 	
 </script>

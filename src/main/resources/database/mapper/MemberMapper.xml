@@ -41,4 +41,6 @@
 		VALUES (#{roleNum}, #{username})
 	</insert>
 
+	
+
 </mapper>

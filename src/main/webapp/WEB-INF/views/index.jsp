@@ -4,6 +4,8 @@
 
 <!-- JSP에서 properties의 메세지를 사용할 수 있도록 하는 API -->
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>   
+
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +29,13 @@
                  <!-- page 실제 내용 -->
                  <h1>Welcome : <spring:message code="hello"></spring:message></h1>
                  <h1><spring:message code="hi"></spring:message></h1>
+                 
+                 <!-- 로그인 성공시에만 <h1> 출력 -->
+                 <sec:authorize access="isAuthenticated()">
+                 	<!-- user의 정보를 가져오는데 name 속성에서 arguments에 값을 넣기 위해 var에 name키의 값을 넣어서 arguments에 var의 값을 넣는다.-->
+                 	<sec:authentication property="name" var="username" /> 
+                 	<h1><spring:message code="login.welcome" arguments="${username}"></spring:message></h1>
+              	 </sec:authorize>
               </div>
            
            </div>

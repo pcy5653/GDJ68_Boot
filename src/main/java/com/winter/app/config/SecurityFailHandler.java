@@ -34,12 +34,14 @@ public class SecurityFailHandler implements AuthenticationFailureHandler {
 		
 		if(exception instanceof InternalAuthenticationServiceException) {
 			// 아이디 여부 확인 : exception이 아이디가 없는 경우
-			message="아이디가 존재하지 않습니다.";
+			// message="아이디가 존재하지 않습니다.";
+			message = "login.fail.nouser";
 		}
 		
 		if(exception instanceof BadCredentialsException) {
 			// 비번 확인 : exception이 틀린 비번일 경우
-			message="비밀번호가 틀렸습니다.";
+			// message="비밀번호가 틀렸습니다.";
+			message = "login.fail.notpassword";
 		}
 		
 		if(exception instanceof AccountExpiredException) {

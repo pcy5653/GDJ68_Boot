@@ -21,7 +21,7 @@ public class SecuritySuccessHandler implements AuthenticationSuccessHandler {
 	@Override
 	public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
 			Authentication authentication) throws IOException, ServletException {
-		// authentication : 로그인 성공 시, 사용자의 정보를 가져온다.!!! SecurityConfig에 사용함.
+		// authentication : 로그인 성공 시, 사용자의 정보를 가져온다!!!(name, principal 2개의 사용자 정보) SecurityConfig에 사용함.
 		// 권한있는 페이지(add, update, delete에서 비로그인으로 접속하면 로그인페이지 -> 로그인 -> add, update, delete 페이지로 이동)로 로그인시 이동을 막기 위함.
 		// 어디서 로그인해도 "/"로 보내지기 위함.
 		log.info("===================>>>>> Authentication : {} ===========", authentication);

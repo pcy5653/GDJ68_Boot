@@ -68,8 +68,11 @@ public class SecurityConfig {
 				.and()
 			.logout()
 				.logoutUrl("/member/logout")	// logout을 처리하는(post) 주소.
-				.logoutSuccessUrl("/")
-				.invalidateHttpSession(true)    // logout 했을때 시간을 0으로 변경. (Legacy때 invalidate를 0으로 준 것과 동일.)
+				//.logoutSuccessUrl("/")
+				.addLogoutHandler(getLogoutAdd())
+				.logoutSuccessHandler(getLogoutHandler())
+				.invalidateHttpSession(true)    // logout 했을때 시간을 0으로 변경. (Legacy때 invalidate를 0으로 준 것과 동일 = session에 사용자 정보를 삭제)
+				.deleteCookies("JSESSIONID")    // logout 했을때 쿠키삭제
 				.and()
 			.sessionManagement()
 			;
@@ -77,7 +80,18 @@ public class SecurityConfig {
 	}
 	
 	
+	// .formLogin() > login 실패
 	SecurityFailHandler getFailHandler() {
 		return new SecurityFailHandler();
 	}
+
+	
+	// .logout() > logout 시, 사용자의 정보를 가져옴. 
+	private SecurityLogoutAdd getLogoutAdd() {
+		return new SecurityLogoutAdd();
+	}
+	private SecurityLogoutHandler getLogoutHandler() {
+		return new SecurityLogoutHandler();
+	}
+	
 }

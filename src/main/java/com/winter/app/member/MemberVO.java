@@ -38,8 +38,12 @@ public class MemberVO extends MemberInfoVO implements UserDetails {
 	// 1회원은 여러개의 권한(role)을 갖는다. roleVOs안에 있는 roleName을 리턴
 	private List<RoleVO> roleVOs;
 	
+	// boolean 타입 getter의 이름은 "is"로 시작. <휴먼계정 표시 | [true : 1 / false : 0]>
+	private Boolean enabled;
 	
 	
+	
+	// getAuthorities : 권한의 정보들, roleVOs에 있는 권한의 정보들을 꺼내는 것.
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		// Collection 자식 : List, Set
@@ -55,23 +59,25 @@ public class MemberVO extends MemberInfoVO implements UserDetails {
 	}
 	@Override
 	public boolean isAccountNonExpired() {
-		// TODO Auto-generated method stub
+		// SecurityFailHandler에서 AccountExpiredException(계정 기간) | [true O / false X]
 		return true;
 	}
 	@Override
 	public boolean isAccountNonLocked() {
-		// TODO Auto-generated method stub
+		// SecurityFailHandler에서 LockedException(잠긴 계정) | [true O / false X]
 		return true;
 	}
 	@Override
 	public boolean isCredentialsNonExpired() {
-		// TODO Auto-generated method stub
+		// SecurityFailHandler에서 CredentialsExpiredException(비밀번호 만료) | [true O / false X]
 		return true;
 	}
 	@Override
 	public boolean isEnabled() {
-		// TODO Auto-generated method stub
-		return true;
+		// SecurityFailHandler에서 DisabledException(휴먼 계정) | [true : 1 / false : 0]
+		
+		// column의 값을 return
+		return this.enabled;
 	}
 	
 }

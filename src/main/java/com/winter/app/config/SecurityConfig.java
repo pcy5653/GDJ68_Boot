@@ -1,5 +1,6 @@
 package com.winter.app.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,6 +15,8 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity  // Security 활성화
 public class SecurityConfig {
 	
+	@Autowired
+	private SecuritySuccessHandler handler;
 	
 	// login 시 pw 암호화 (DB와 login시 pw 비번과 일치확인)
 	// pw를 암호화해서 db에 집어넣고 login때 암호화된 비번과 일치한지 확인 후 index로 넘어감
@@ -57,8 +60,10 @@ public class SecurityConfig {
 			// form 관련 설정
 			.formLogin()
 				.loginPage("/member/login")		// login을 처리하는(post) 주소. (security에서 가로채서 Controller가지 않고 바로 메서드 실행, loadUserByUsername 메서드 실행)  내장된 login form을 사용하지 않고 개발자가 만든 form을 사용. (Controller POST(login) 주석)
-				.defaultSuccessUrl("/")         // login 성공시
-				.failureUrl("/member/login")    // login 실패시
+				// .defaultSuccessUrl("/")      // login 성공시 [1.ver]
+				.successHandler(handler)        // SecuritySuccessHandler의 객체를 가져옴. login 성공시 [2.ver 사용!! -> 후처리 할 시 사용.]
+				//.failureUrl("/member/login?message=LoginFail")    // login 실패시 [1.ver] (실패했을 때, 파라미터 나타남)
+				.failureHandler(getFailHandler()) // 메서드를 만들어서 불러오기 (객체생성대신) [2.ver]
 				.permitAll()                    // login 경로로 가는건 모두 허용	
 				.and()
 			.logout()
@@ -69,5 +74,10 @@ public class SecurityConfig {
 			.sessionManagement()
 			;
 		return httpSecurity.build();
+	}
+	
+	
+	SecurityFailHandler getFailHandler() {
+		return new SecurityFailHandler();
 	}
 }

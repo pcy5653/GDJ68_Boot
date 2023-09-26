@@ -24,6 +24,11 @@
 	         
 	         <div class="container-fluid">
 	         	<!-- page 상세내용 -->
+	         	<div>
+	         		<!-- login 실패시 message가 뜸 -->
+	         		<h3>${param.message}</h3>
+	         	</div>
+	         	
 	         	
                <!-- action 안쓰면 url 그대로 주소 사용 /member/join -->
                <!-- prefix="form" 사용 -->
@@ -55,5 +60,15 @@
    </div>
    
 <c:import url="/WEB-INF/views/layout/footer.jsp"></c:import>
+
+<script type="text/javascript">
+	/* 로그인 실패 시, 파라미터로 받아온 message를 띄움. */
+	let message = '${param.message}';
+	
+	if(message != ""){
+		alert('${param.message}');
+	}
+	
+</script>
 </body>
 </html>

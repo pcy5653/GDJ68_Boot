@@ -25,12 +25,13 @@
 	         	
 	         	
 	         	<!-- topbar > profile --> -->
+	         	<!-- Authentication 안에 있는 principal에서 사용자의 정보를 출력한다. -->
 	         	<sec:authentication property="principal" var="member" /> 
-                <span>ID : ${member.username}</span> <br>
-                <span>PW : ${member.password}</span><br>
-                <span>EMAIL : ${member.email}</span><br>
-                <span>BIRTH : ${member.birth}</span><br>
-                <span>NAME : ${member.name}</span>
+	                <span>ID : ${member.username}</span> <br>
+	                <span>PW : ${member.password}</span><br>
+	                <span>EMAIL : ${member.email}</span><br>
+	                <span>BIRTH : ${member.birth}</span><br>
+	                <span>NAME : ${member.name}</span>
 	         	
 	         </div>
          

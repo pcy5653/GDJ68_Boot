@@ -51,6 +51,12 @@
                      <!-- error message -->
                      <form:errors path="password"></form:errors>
                   </div>
+                  
+                  <!-- Form 에서 checkbox remember-me를 체크 하면 다음 접속시 로그인 없이 바로 인증 -->
+                  <div class="form-group">
+                  	<label for="remember">Remember Me</label>
+                  	<input type="checkbox" name="remember-me" id="remember" class="form-control">
+                  </div>
 
                   <button type="submit" class="btn btn-primary">Submit</button>
                
@@ -73,6 +79,10 @@
 	if(message != ""){
 		alert(message);
 	}
+	
+	// redirect 로 보냈을 때, URL 경로나타내는 것을 삭제.
+	// 현재는 alert 창이 나타나고 그것을 클릭해야 URL 삭제
+	history.replaceState({}, null, location.pathname);
 	
 </script>
 </body>

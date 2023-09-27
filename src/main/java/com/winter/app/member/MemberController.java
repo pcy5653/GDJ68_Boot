@@ -1,11 +1,13 @@
 package com.winter.app.member;
 
+import java.security.Principal;
 import java.util.List;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -32,16 +34,23 @@ public class MemberController {
 	
 	@GetMapping("info")
 	public void getInfo()throws Exception{
+		// 1. DB에서 사용자 정보를 조회해서 JSP로 보냄. (수정을 했을 시, DB에서 수정된 데이터가 들어갔기 때문에 '수정 후의 정보'가 뿌려짐)
 		
+		// 2. Security에서 사용자 정보를 꺼내서 JSP로 보냄. (수정을 했을 시, '수정 전의 정보'가 뿌려짐)
 	}
 
 	
 	// 정보수정 update : DB or session에서 사용자 정보꺼내기 (password는 따로 수정)
 	@GetMapping("update") // 정보수정 전
-	public void setUpdate(HttpSession session, Model model)throws Exception{
-		MemberVO memberVO = (MemberVO)session.getAttribute("member");
+	public void setUpdate(@AuthenticationPrincipal MemberVO memberVO, Model model)throws Exception{
+		// 1.ver -> MemberVO memberVO = (MemberVO)session.getAttribute("member");
 		//memberVO = memberService.getLogin(memberVO); // 가져온 정보가 일치 확인 후에 update 부분에 뿌리기
+		// 2.ver -> MemberVO memberVO = (MemberVO)principal;
+		// MemberVO memberVO = (MemberVO)principal;
+		// 3.ver -> @AuthenticationPrincipal MemberVO memberVO(매개변수)로 받을 시, memberVO를 model에 담아 보낸다.
 		
+		
+		// update시 검증위한 정보
 		MemberInfoVO memberInfoVO = new MemberInfoVO();
 		memberInfoVO.setName(memberVO.getName());
 		memberInfoVO.setBirth(memberVO.getBirth());
@@ -51,8 +60,14 @@ public class MemberController {
 		model.addAttribute("memberInfoVO", memberInfoVO);
 	}
 	@PostMapping("update") // 정보수정 후 | 검증 (@Valid , BindingResult)
-	public void setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+	public String setUpdate(@Valid MemberInfoVO memberInfoVO, BindingResult bindingResult)throws Exception{
+		Object obj = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		MemberVO memberVO = (MemberVO)obj;
 		
+		memberVO.setEmail("naver@naver.com");
+		
+		return "redirect:/";
+	
 	}
 	
 	

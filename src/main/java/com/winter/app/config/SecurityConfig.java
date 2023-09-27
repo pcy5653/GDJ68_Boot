@@ -10,23 +10,21 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+import com.winter.app.member.MemberService;
+
 //**-context.xml 파일과 같은 역할
 @Configuration  // springBoot 실행 시, 가장 먼저 읽히는 파일 (설정파일)
 @EnableWebSecurity  // Security 활성화
 public class SecurityConfig {
 	
+	// << 방법1. 매개변수로 객체를 선언 >>
 	@Autowired
 	private SecuritySuccessHandler handler;
-	
-	// login 시 pw 암호화 (DB와 login시 pw 비번과 일치확인)
-	// pw를 암호화해서 db에 집어넣고 login때 암호화된 비번과 일치한지 확인 후 index로 넘어감
-	@Bean
-	PasswordEncoder passwordEncoder() {
-		return new BCryptPasswordEncoder();
-	}
+	@Autowired
+	private MemberService memberService;
 	
 	
-	
+
 	@Bean  //API 이기 때문에 개발자가 스스로 객체 생성
 	WebSecurityCustomizer webSecurityCustomizer() {
 		// Security에서 무시해야할 URL 패턴 등록 (front 소스)
@@ -45,7 +43,7 @@ public class SecurityConfig {
 	SecurityFilterChain securityFilterChain(HttpSecurity httpSecurity)throws Exception {
 		// 모든 권한 허용
 		httpSecurity
-			.cors()
+			.cors()					// 웹보안 : URL로 주소를 넣을 때, 
 			.and()
 			.csrf()
 			.disable()
@@ -74,11 +72,20 @@ public class SecurityConfig {
 				.invalidateHttpSession(true)    // logout 했을때 시간을 0으로 변경. (Legacy때 invalidate를 0으로 준 것과 동일 = session에 사용자 정보를 삭제)
 				.deleteCookies("JSESSIONID")    // logout 했을때 쿠키삭제
 				.and()
+			.rememberMe()
+				//.rememberMeParameter("remember-me") -> form의 파라미터명을 기본제공되는 "remember-me"로 했기 때문에 생략
+				.tokenValiditySeconds(60)
+				.key("rememberKey") 			// 인증받은 사용자의 정보로 token 생성에 사용 되는 값, 필수 사항, 개발자 임의 값 설정 | 해킹시 properties의 내용 변경
+				.userDetailsService(memberService) // 인증 절차를 진행할 UserDetailService, !필수 사항! 
+				.authenticationSuccessHandler(handler)
+				.and()
 			.sessionManagement()
 			;
 		return httpSecurity.build();
 	}
 	
+	
+	// << 방법2. 매개변수로 메서드를 선언 >>
 	
 	// .formLogin() > login 실패
 	SecurityFailHandler getFailHandler() {

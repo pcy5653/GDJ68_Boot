@@ -31,7 +31,7 @@ public class MemberVO extends MemberInfoVO implements UserDetails {
 	@Size(max=12, min=2)  // 문자열이나 배열의 길이 제한, index {0}:멤버변수명, {1}:max, {2}:min
 	private String username;
 	// 공백없이 숫자, 소문자, 특수기호 넣어서 6~12자리 비밀번호
-	@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\\\W)(?=\\\\S+$).{6,12}", message="올바른 비빌번호를 입력하세요.")
+	//@Pattern(regexp = "(?=.*[0-9])(?=.*[a-z])(?=.*\\\\W)(?=\\\\S+$).{6,12}", message="올바른 비빌번호를 입력하세요.")
 	private String password;
 	private String passwordCheck; // pw check
 	

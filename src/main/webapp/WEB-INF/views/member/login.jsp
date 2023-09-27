@@ -61,6 +61,9 @@
                   <button type="submit" class="btn btn-primary">Submit</button>
                
                </form:form>
+
+               <!-- 카카오 API : URL 주소는 변경 불가 -->
+               <a href="/oauth2/authorization/kakao">KakaoLogin</a>
 	         </div>
          
          </div>

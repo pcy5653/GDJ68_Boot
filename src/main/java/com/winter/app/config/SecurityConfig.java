@@ -55,7 +55,7 @@ public class SecurityConfig {
 				.antMatchers("/").permitAll()				     // 루트 뒤 경로 모든 권한 누구나 허용
 				.and()
 			
-			// form 관련 설정
+			// form login 관련 설정
 			.formLogin()
 				.loginPage("/member/login")		// login을 처리하는(post) 주소. (security에서 가로채서 Controller가지 않고 바로 메서드 실행, loadUserByUsername 메서드 실행)  내장된 login form을 사용하지 않고 개발자가 만든 form을 사용. (Controller POST(login) 주석)
 				// .defaultSuccessUrl("/")      // login 성공시 [1.ver]
@@ -64,6 +64,7 @@ public class SecurityConfig {
 				.failureHandler(getFailHandler()) // 메서드를 만들어서 불러오기 (객체생성대신) [2.ver]
 				.permitAll()                    // login 경로로 가는건 모두 허용	
 				.and()
+			// logout 관련 설정
 			.logout()
 				.logoutUrl("/member/logout")	// logout을 처리하는(post) 주소.
 				//.logoutSuccessUrl("/")
@@ -72,6 +73,7 @@ public class SecurityConfig {
 				.invalidateHttpSession(true)    // logout 했을때 시간을 0으로 변경. (Legacy때 invalidate를 0으로 준 것과 동일 = session에 사용자 정보를 삭제)
 				.deleteCookies("JSESSIONID")    // logout 했을때 쿠키삭제
 				.and()
+			// rememberMe : 로그인 시, remember me 체크하면 창끄고 돌아와도 로그인 상태 유지
 			.rememberMe()
 				//.rememberMeParameter("remember-me") -> form의 파라미터명을 기본제공되는 "remember-me"로 했기 때문에 생략
 				.tokenValiditySeconds(60)
@@ -79,7 +81,12 @@ public class SecurityConfig {
 				.userDetailsService(memberService) // 인증 절차를 진행할 UserDetailService, !필수 사항! 
 				.authenticationSuccessHandler(handler)
 				.and()
-			.sessionManagement()
+			// oauth2 social login (카카오, naver 로그인)
+			.oauth2Login()
+				.userInfoEndpoint()
+				.userService(memberService)
+				.and()
+	
 			;
 		return httpSecurity.build();
 	}

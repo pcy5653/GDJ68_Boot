@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
@@ -14,6 +15,7 @@ import javax.validation.constraints.Size;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,9 +26,8 @@ import lombok.ToString;
 @ToString
 //update 시 username, password, passwordCheck만 받기 위해 나머지 정보는 MemberInfoVO에 넣는다.
 // memberVO를 UserDetails 타입으로 구현
-public class MemberVO extends MemberInfoVO implements UserDetails {
+public class MemberVO extends MemberInfoVO implements UserDetails, OAuth2User {
 
-	
 	@NotBlank  // Null 허용하지 않음, 문자 1개이상 포함
 	@Size(max=12, min=2)  // 문자열이나 배열의 길이 제한, index {0}:멤버변수명, {1}:max, {2}:min
 	private String username;
@@ -41,7 +42,19 @@ public class MemberVO extends MemberInfoVO implements UserDetails {
 	// boolean 타입 getter의 이름은 "is"로 시작. <휴먼계정 표시 | [true : 1 / false : 0]>
 	private Boolean enabled;
 	
+	// OAuth2User 객체 생성
+	private Map<String, Object> attributes;
 	
+	
+	// ------ OAuth2User Override
+	@Override
+	public Map<String, Object> getAttributes() {
+		// TODO Auto-generated method stub
+		return this.attributes;
+	}
+	
+	
+	// ------ UserDetails Override
 	
 	// getAuthorities : 권한의 정보들, roleVOs에 있는 권한의 정보들을 꺼내는 것.
 	@Override

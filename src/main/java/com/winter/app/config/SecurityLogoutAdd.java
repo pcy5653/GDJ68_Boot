@@ -1,5 +1,6 @@
 package com.winter.app.config;
 
+import java.io.IOException;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -26,6 +27,8 @@ public class SecurityLogoutAdd implements LogoutHandler {
 	// Admin Key 
 	@Value("${spring.security.oauth2.client.registration.kakao.client-secret}")
 	private String adminKey;
+	@Value("${spring.security.oauth2.client.registration.kakao.client-id}")
+	private String RestKey;
 	
 	
 	// << addLogoutHandler(obj) -- 로그아웃 할 시, 해야 할 기능을 구성 >>
@@ -34,14 +37,44 @@ public class SecurityLogoutAdd implements LogoutHandler {
 		
 		log.info("===== LOGOUT ADD =============");
 		
-		this.logoutForKakao(authentication);;	
+		// <<웹 로그인 사용자 로그아웃 호출>> 구분하는 코드 작성
+		
+		
+		// <<카카오 로그인 사용자 로그아웃 호출>>
+		//this.logoutForKakao(authentication);  카카오 로그아웃
+		this.logoutWithKakao(response);  // 카카오계정과 함께 로그아웃
+		
+		// <<네이버 로그인 사용자 로그아웃 호출>>
 	}
 	
 	
+	// 카카오계정과 함께 로그아웃(GET 방식) -> 로그인 하고 로그아웃시 계정이 페이지와 연동 X (실행 o)
+	public void logoutWithKakao(HttpServletResponse response) {
+		//RestTemplate restTemplate = new RestTemplate();
+		StringBuffer sb = new StringBuffer();
+		sb.append("https://kauth.kakao.com/oauth/logout?");
+		sb.append("client_id=");
+		sb.append("52e5ee57181abdcbff698a5732e60f4d");
+		sb.append("&logout_redirect_uri=");
+		sb.append("http://localhost:82/member/kakaoLogout");
+		
+		//ResponseEntity<String> res = restTemplate.getForEntity(sb.toString(),String.class);
+		
+		//log.info(" +++ 카카오 계정과 함께 로그아웃  : {} ",  res);
+		try {
+			response.sendRedirect(sb.toString());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	
+	// 카카오 로그아웃 (요청 2가지 방식)
 	public void logoutForKakao(Authentication authentication) {
 		RestTemplate restTemplate = new RestTemplate();
 		MemberVO memberVO = (MemberVO)authentication.getPrincipal();
-		log.info("-------AccessToken : {} ----------",memberVO.getAccessToken()); // 각
+		log.info("-------AccessToken : {} ----------",memberVO.getAccessToken());
 		
 		HttpHeaders headers = new HttpHeaders();
 		headers.add("Content-Type", "application/x-www-form-urlencoded");

@@ -32,6 +32,15 @@ public class MemberController {
 	@Autowired
 	private MemberService memberService;
 	
+	
+	// 카카오계정과 함께 로그아웃(GET 방식)
+	@GetMapping("kakaoLogout")
+	public String kakaoLogout() {
+		log.info("==>>>>>>>>>>>>>>>>>>>>>> 카카오 로그아웃 함께 진행");
+		return "redirect:/";
+	}
+	
+	
 	@GetMapping("info")
 	public void getInfo()throws Exception{
 		// 1. DB에서 사용자 정보를 조회해서 JSP로 보냄. (수정을 했을 시, DB에서 수정된 데이터가 들어갔기 때문에 '수정 후의 정보'가 뿌려짐)

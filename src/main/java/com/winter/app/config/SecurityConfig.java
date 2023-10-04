@@ -68,8 +68,8 @@ public class SecurityConfig {
 			.logout()
 				.logoutUrl("/member/logout")	// logout을 처리하는(post) 주소.
 				//.logoutSuccessUrl("/")
-				.addLogoutHandler(getLogoutAdd())
-				.logoutSuccessHandler(getLogoutHandler())
+				.addLogoutHandler(getLogoutAdd())           // 듈 중 택 1
+				//.logoutSuccessHandler(getLogoutHandler()) // 듈 중 택 1
 				.invalidateHttpSession(true)    // logout 했을때 시간을 0으로 변경. (Legacy때 invalidate를 0으로 준 것과 동일 = session에 사용자 정보를 삭제)
 				.deleteCookies("JSESSIONID")    // logout 했을때 쿠키삭제
 				.and()

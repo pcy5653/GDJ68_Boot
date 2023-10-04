@@ -86,6 +86,7 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		log.info("===> auth2User = kakao_account : {} ==>>>>>>", kakaoAccount.get("birthday"));    // birth는 '-'로 년,월,일 구분 (무조건 년,월,일 넣어서 해야한다.)
 		
 		
+		// ++플젝 : 사용자가 DB에 있는지 조회
 		// << 사용자 정보 : username, name, email 구하기 >>
 		memberVO.setUsername(map.get("nickname")); // LinkedHashMap<String, Object> -> LinkedHashMap<String, String> 으로 하면 .toString() 사용 X 
 		memberVO.setName(map.get("nickname"));
@@ -115,6 +116,7 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		memberVO.setAttributes(auth2User.getAttributes()); 
 		
 		
+		// ++플젝 : 사용자 권한을 DB에서 조회
 		// Social 로그인 시, 권한(role)이 null이기에 작성 (수동)
 		List<RoleVO> list = new ArrayList<>();   // 1. memberVO의 roleVOs 타입 동일
 		RoleVO roleVO = new RoleVO();			 // 2. 객체생성

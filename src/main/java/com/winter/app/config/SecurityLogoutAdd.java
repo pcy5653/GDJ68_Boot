@@ -15,11 +15,13 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.reactive.function.client.WebClient;
 
 import com.winter.app.board.PostVO;
 import com.winter.app.member.MemberVO;
 
 import lombok.extern.slf4j.Slf4j;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 public class SecurityLogoutAdd implements LogoutHandler {
@@ -43,8 +45,30 @@ public class SecurityLogoutAdd implements LogoutHandler {
 		// <<카카오 로그인 사용자 로그아웃 호출>>
 		//this.logoutForKakao(authentication);  카카오 로그아웃
 		this.logoutWithKakao(response);  // 카카오계정과 함께 로그아웃
+		//this.userWebClient();
+		
 		
 		// <<네이버 로그인 사용자 로그아웃 호출>>
+	}
+	
+	
+	// 연결 끊기 (계정 탈퇴)
+	
+	
+	// WebClient 사용(RestTemplate보다 미래적으로 사용)
+	public void userWebClient() {
+		WebClient webClient = WebClient.builder()
+							.baseUrl("https://jsonplaceholder.typicode.com/")
+							.build();
+		Mono<ResponseEntity<PostVO>> res = webClient.get()
+				 .uri("posts/1")   // 기본 공통 URI 설정
+				 .retrieve()
+				 .toEntity(PostVO.class);
+		
+		PostVO postVO = res.block().getBody();
+		
+		log.info("==>>> WebClient ==:{}", postVO);
+					
 	}
 	
 	
@@ -92,6 +116,7 @@ public class SecurityLogoutAdd implements LogoutHandler {
 		HttpEntity<MultiValueMap<String, String>> req = new HttpEntity<>(params , headers);
 		ResponseEntity<String> res = restTemplate.postForEntity("https://kapi.kakao.com/v1/user/logout", req, String.class); // JSON이기에 retrun String
 		
+		// body에서 postVO로 받음
 		String result = res.getBody();
 		
 		log.info("========로그아웃 id {}=============", result);

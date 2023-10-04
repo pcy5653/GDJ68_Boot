@@ -22,6 +22,12 @@
 	</properties>
 	<dependencies>
 		
+		<!-- WebClient (logout시 사용) -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-webflux</artifactId>
+		</dependency>
+		
 		<!-- oauth2 소셜 로그인 API -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

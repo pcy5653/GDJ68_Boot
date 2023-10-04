@@ -45,6 +45,9 @@ public class MemberVO extends MemberInfoVO implements UserDetails, OAuth2User {
 	// OAuth2User 객체 생성
 	private Map<String, Object> attributes;
 	
+	// 로그아웃 시 token 사용
+	private String accessToken;
+	
 	
 	// ------ OAuth2User Override
 	@Override

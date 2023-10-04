@@ -53,14 +53,14 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		String social = clientRegistration.getRegistrationId();   // 카카오
 		if(social.equals("kakao")) {
 			// 리턴타입 OAuth2User
-			auth2User = this.forKakao(auth2User);
+			auth2User = this.forKakao(auth2User, userRequest);
 		}
 		
 		// 사용자의 정보
 		return auth2User;
 	}
 	// kakao처리 메소드 
-	private OAuth2User forKakao(OAuth2User auth2User){
+	private OAuth2User forKakao(OAuth2User auth2User, OAuth2UserRequest userRequest){
 		// MemberVO 타입 : UserDetails, OAuth2User
 		MemberVO memberVO = new MemberVO();
 		// memberVO.setUsername(null);
@@ -88,8 +88,10 @@ public class MemberService extends DefaultOAuth2UserService implements UserDetai
 		
 		// ++플젝 : 사용자가 DB에 있는지 조회
 		// << 사용자 정보 : username, name, email 구하기 >>
+		memberVO.setAccessToken(userRequest.getAccessToken().getTokenValue());
 		memberVO.setUsername(map.get("nickname")); // LinkedHashMap<String, Object> -> LinkedHashMap<String, String> 으로 하면 .toString() 사용 X 
-		memberVO.setName(map.get("nickname"));
+		//memberVO.setName(map.get("nickname"));
+		memberVO.setName(auth2User.getName());     // 카카오 회원Id를 Name에 대입
 		// memberVO.setUsername(profile.get("nickname").toString()); <위 코드와 동일 / map에서 꺼내거나 profile에서 꺼내거나 둥중 하나>
 		memberVO.setEmail(kakaoAccount.get("email").toString());
 		

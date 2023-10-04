@@ -22,7 +22,6 @@
 	</properties>
 	<dependencies>
 		
-		
 		<!-- oauth2 소셜 로그인 API -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
